@@ -10,18 +10,18 @@
           Hillsborough County Customer Varification
         </strong>
       </div>
-      <div class="card-body mb-3">
+      <div class="card-body">
         <em>
           Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore.
           <strong>Am I a Hillsborough County customer?</strong>
         </em>
 
-          <div class="input-group my-3">
-            <input type="text" class="form-control" placeholder="My Address" aria-label="My Address" aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
-            </div>
+        <div class="input-group my-3">
+          <input type="text" class="form-control" placeholder="My Address" aria-label="My Address" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
           </div>
+        </div>
 
         <div class="form-check mt-2">
           <input v-model="varify" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
