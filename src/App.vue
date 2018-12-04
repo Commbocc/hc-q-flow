@@ -4,7 +4,7 @@
     <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
     <div class="card mb-3">
-      <div class="card-header bg-primary text-white lead">
+      <div class="card-header bg-primary text-white">
         <span class="fas fa-hand-paper fa-fw"></span>
         <strong class="font-weight-bold">
           Hillsborough County Customer Varification
@@ -32,13 +32,13 @@
 
         <div class="row mt-3">
           <div class="col-md-6">
-            <a class="btn btn-primary text-white btn-lg btn-block" :class="btnVarified">
+            <a class="btn btn-primary text-white btn-lg btn-block mb-1" :class="btnVarified">
               Get in Line
               <span class="fas fa-fw fa-ticket-alt"></span>
             </a>
           </div>
           <div class="col-md-6">
-            <a href="#" class="btn btn-primary text-white btn-lg btn-block">
+            <a href="#" class="btn btn-primary text-white btn-lg btn-block mb-1">
               My Tickets
               <span class="fas fa-fw fa-user-circle"></span>
             </a>
