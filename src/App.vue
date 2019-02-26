@@ -3,36 +3,37 @@
 
     <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
+    <!-- <pre class="p-3 bg-light">{{ $data }}</pre> -->
+
     <div class="card mb-3">
       <div class="card-header bg-primary text-white">
         <span class="fas fa-hand-paper fa-fw"></span>
         <strong class="font-weight-bold">
-          Hillsborough County Customer Varification
+          Hillsborough County Customer Verification
         </strong>
       </div>
       <div class="card-body">
-        <em>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore.
-          <strong>Am I a Hillsborough County customer?</strong>
-        </em>
+        <p>
+          <em>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore.
+            <strong>Am I a Hillsborough County customer?</strong>
+          </em>
+        </p>
 
-        <div class="input-group my-3">
-          <input type="text" class="form-control" placeholder="My Address" aria-label="My Address" aria-describedby="button-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+        <form is="HcEsriSearchWidget" @submit="reset" @result="handleResult"></form>
+
+        <form>
+          <div class="form-check">
+            <input v-model="verify" class="form-check-input" type="checkbox" value="" id="countyVerification">
+            <label class="form-check-label" for="countyVerification">
+              I am a customer of Hillsborough County
+            </label>
           </div>
-        </div>
-
-        <div class="form-check mt-2">
-          <input v-model="varify" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          <label class="form-check-label" for="defaultCheck1">
-            I am a customer of Hillsborough County
-          </label>
-        </div>
+        </form>
 
         <div class="row mt-3">
           <div class="col-md-6">
-            <a class="btn btn-primary text-white btn-lg btn-block mb-1" :class="btnVarified">
+            <a class="btn btn-primary text-white btn-lg btn-block mb-1" :class="btnVerified">
               Get in Line
               <span class="fas fa-fw fa-ticket-alt"></span>
             </a>
@@ -51,25 +52,41 @@
     <table is="IwtTable" class="my-3"></table>
 
     <h3>Lorem Ipsum</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
 
 
   </div>
 </template>
 
 <script>
+import HcEsriSearchWidget from 'hc-esri-search-widget'
 import IwtTable from './components/Iwt'
+
 export default {
-  components: { IwtTable },
+  components: { IwtTable, HcEsriSearchWidget },
   data () {
     return {
-      varify: false,
-      msg: 'Welcome to Your Vue.js App'
+      verify: false
+    }
+  },
+  methods: {
+    reset () {
+      console.log('reset')
+    },
+    handleResult (searchResult) {
+      let url = 'https://services.arcgis.com/apTfC6SUmnNfnxuF/ArcGIS/rest/services/County_Boundary/FeatureServer/0'
+      searchResult.queryFeatures(url).then(features => {
+        this.verify = (features) ? true : false
+      }).catch(err => {
+        this.verify = false
+      })
     }
   },
   computed: {
-    btnVarified () {
-      return (this.varify) ? null : 'disabled'
+    btnVerified () {
+      return (this.verify) ? null : 'disabled'
     }
   }
 }
