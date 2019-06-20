@@ -6,7 +6,7 @@
     <!-- <pre class="p-3 bg-light">{{ $data }}</pre> -->
 
     <div class="card v-card border border-primary mb-3">
-      <div class="card-header bg-primary text-white py-3">
+      <div class="card-header bg-primary text-white">
         <span class="fas fa-hand-paper fa-fw"></span>
         <strong class="font-weight-bold">
           Hillsborough County Customer Verification
@@ -20,7 +20,7 @@
           </em>
         </p>
 
-        <form is="HcEsriSearchWidget" @submit="reset" @result="handleResult"></form>
+        <form is="HcEsriSearchForm" source-selector @submit="reset" @result="handleResult"></form>
 
         <div v-if="searched" class="alert" :class="(verified) ? 'alert-info' : 'alert-warning'">
           <template v-if="verified">
@@ -60,21 +60,29 @@
 
     <table is="IwtTable" class="my-3"></table>
 
-    <h3>Lorem Ipsum</h3>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    <div class="alert alert-info small">
+      <h5 class="alert-heading">
+        Save time and skip the line.
+        <a href="#" class="text-secondary font-weight-bold">Request an ETicket</a>
+      </h5>
+      <p class="card-text">The estimated wait times displayed above are based on the average wait for each service, the number of customers currently waiting, and the number of service stations available.</p>
+
+      <p class="card-text">Actual wait times may change between the time you access the information on the site and when you arrive to the office. Longer wait times are generally between the hours of 10:30 a.m. to 3 p.m.</p>
+
+      <p class="card-text">E-tickets will be issued up to 4 p.m. Any tickets issued by 4 p.m. may continue their business transaction through close of business at 5 p.m.</p>
+    </div>
+
 
   </div>
 </template>
 
 <script>
-import HcEsriSearchWidget from 'hc-esri-search-widget'
+import HcEsriSearchForm from '@hcflgov/vue-esri-search'
 import IwtTable from './components/Iwt'
 let featureUrl = 'https://services.arcgis.com/apTfC6SUmnNfnxuF/ArcGIS/rest/services/CountyBoundary_Unincorporated/FeatureServer/0'
 
 export default {
-  components: { IwtTable, HcEsriSearchWidget },
+  components: { IwtTable, HcEsriSearchForm },
   data () {
     return {
       searched: false,
@@ -90,7 +98,9 @@ export default {
       this.override = false
     },
     handleResult (searchResult) {
-      searchResult.queryFeatures(featureUrl).then(features => {
+      searchResult.queryFeatures({
+        url: featureUrl
+      }).then(features => {
         // console.log(features)
         this.verified = (features) ? true : false
       }).catch(err => {
